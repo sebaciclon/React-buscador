@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SearchBar from "./components/SearchBar";
 
 // simulamos una db.
 const people = [
@@ -74,6 +75,7 @@ function App() {
   const [data, setData] = useState([...people, ...calendar, ...emails]);
   const [selection, setSelection] = useState(null);
   const [currentOption, setCurrentOption] = useState("all");
+  const [count, setCount] = useState(0);
 
   function handleClick(e) {
     const op = e.target.name;
@@ -103,12 +105,18 @@ function App() {
     };
   }
 
+  function handleItemSelected(item) {
+    setSelection(item);
+  }
+
   return (
     <div>
       <button onClick={handleClick} name="all">All</button>
       <button onClick={handleClick} name="people">People</button>
       <button onClick={handleClick} name="calendar">Calendar</button>
       <button onClick={handleClick} name="emails">Emails</button>
+      {selection ? <div>You Selected: {selection.title}</div> : ""}
+      <SearchBar items={data} onItemSelected={handleItemSelected}/>
     </div>   
   );
 }
